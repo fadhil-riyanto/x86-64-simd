@@ -10,6 +10,9 @@ _do_sse_float_st:
         pushq %rbp 
         movq %rsp, %rbp
 
+        // movl $29, %rax 
+        // movl $29, 12;
+
         movss aa(%rip), %xmm0
 
         movq %rbp, %rsp

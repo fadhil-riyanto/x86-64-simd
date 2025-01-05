@@ -66,6 +66,12 @@ __m128i __hot simd_128_add_ns(__m128i *a_ptr, __m128i *b_ptr)
                                                                 // current layout 
                                                                 // {0, 0, d, c}
 
+                                                                // gdb layout
+                                                                // v4_int32 = {0x10, 0x0, 0x0, 0x0} // nb: 3, 4 uninitalized
+                                                                // v4_int32 = {0x9, 0x0, 0x0, 0x0} (aka xmm2)
+
+                                                                // setelah punpckldq
+                                                                // {0x9, 0x10, 0x0, 0x0},
    
    0x000055555555529b <+89>:    movd   -0x18(%rbp),%xmm1        // load 0x18 to xmm1 aka b
    0x00005555555552a0 <+94>:    movd   -0x14(%rbp),%xmm0        // load 0x14 to xmm0 aka a
