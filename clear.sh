@@ -1,5 +1,6 @@
 rm_and_back() {
-        rm -rf *.bin 
+        rm *.bin 
+        rm *.o
         rm p
         cd ..
 }
