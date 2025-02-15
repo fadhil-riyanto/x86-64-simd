@@ -96,12 +96,17 @@ sum_all:
         movq %rsp, %rbp
 
         // nb: 0 ~ 3 is unused
-        sub $8, %rsp
+        sub $32, %rsp
+
+        movq %rdx, 24(%rsp)             # arg 3
+        movq %rsi, 16(%rsp)              # arg 2
+        movq %rdi, 8(%rsp)              # arg 1
 
         // tell how many fetch need to taken
         movl %esi, %eax 
         movq $4, %r9
         div %r9 
+        dec %eax
         movl %eax, 4(%rsp)
 
         xor %ecx, %ecx
@@ -110,6 +115,11 @@ sum_all:
 sum_all_loop:
         // bug: overwrite 8 bytes
         movl 0(%rsp), %ecx
+
+        // restore previous call stack
+        movq 24(%rsp), %rdx
+        movq 16(%rsp), %rsi 
+        movq 8(%rsp), %rdi
         
         movl %ecx, %edx
         xorps %xmm0, %xmm0
@@ -118,8 +128,9 @@ sum_all_loop:
 
         movl 0(%rsp), %ecx
 
+
         cmpl %ecx, 4(%rsp)
-        jne sum_all_inc_loop
+        jl sum_all_inc_loop
         je sum_all_exit_done
 sum_all_inc_loop:
         incq 0(%rsp)

@@ -23,6 +23,14 @@
 extern int _m_32fetch(int *array, int len, int indexof);
 extern int sum_all(int *array, int len, int indexof);
 
+struct abc {
+        int     counter;
+        int     index;
+        long    arg1;
+        long    arg2;
+        long    arg3;
+}
+
 int main()
 {
         int array[16] = {
